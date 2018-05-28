@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LyricsCrawler {
@@ -25,18 +26,25 @@ public class LyricsCrawler {
 
         Elements naslovJsoup = doc.getElementsByClass("lyricCapt");
 
-
         Elements lyricsJsoup = doc.getElementsByClass("lyric");
 
         List<String> lyrics = new ArrayList<String>();
 
         for (Element element : lyricsJsoup) {
-            lyrics.add(element.toString().substring(element.toString().indexOf(">")+1).replace("<br>", "\\r\\n"));
+
+            lyrics.addAll(Arrays.asList(element.toString().substring(element.toString().indexOf(">")+1).split("<br>")));
+
         }
 
+        lyrics.replaceAll(String::trim);
+
+        for (int i = 0; i < lyrics.size(); i++) {
+            if (lyrics.get(i).contains("</p>")) {
+                lyrics.set(i, lyrics.get(i).replace("</p>", ""));
+            }
+        }
 
         lyrics.forEach(System.out::println);
 
     }
-
 }
