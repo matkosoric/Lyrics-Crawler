@@ -25,9 +25,7 @@ public class LyricsCrawler {
 
     }
 
-
-
-    // skupljanje linkova na pjesme po izvođaču
+    // collecting links
     public static List<String> scrapeSongLinks (String urlIzvođača) {
 
         List <String> songLinks = new ArrayList<>();
@@ -46,7 +44,7 @@ public class LyricsCrawler {
     }
 
 
-    // ekstrakcija teksta
+    // extracting text
     public static void extractLyrics (String urlPjesme) {
 
         Document doc = null;
@@ -72,6 +70,7 @@ public class LyricsCrawler {
             }
         }
 
+        // output
         Path lokacija = Paths.get("src/main/resources/" + izvodjac);
         try {
             Files.createDirectories(lokacija);
